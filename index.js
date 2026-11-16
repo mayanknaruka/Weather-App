@@ -1,21 +1,39 @@
+
 async function getWhether(location) {
   try {
     const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK?unitGroup=metric`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=metric&contentType=json`
     );
 
     if (!response.ok) {
-      throw new Error("whether data not found");
+      throw new Error("Weather data not found");
     }
 
     const whetherData = await response.json();
 
-    console.log(whetherData);
+    const processedData = processWeatherData(whetherData);
 
-    return whetherData;
+    console.log(processedData);
+
+    return processedData;
   } catch (error) {
-    console.error("error fetching whether:", error);
+    console.error("Error fetching weather:", error);
   }
 }
 
-getWhether("London")
+function processWeatherData(weatherData) {
+  const requiredData = {
+    city: weatherData.resolvedAddress,
+    temperature: weatherData.currentConditions.temp,
+    feelsLike: weatherData.currentConditions.feelslike,
+    humidity: weatherData.currentConditions.humidity,
+    conditions: weatherData.currentConditions.conditions,
+    icon: weatherData.currentConditions.icon,
+    windSpeed: weatherData.currentConditions.windspeed,
+    description: weatherData.description,
+  };
+
+  return requiredData;
+}
+
+getWhether("London, UK");
