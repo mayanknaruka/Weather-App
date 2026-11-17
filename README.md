@@ -27,7 +27,7 @@ A simple and responsive Weather App built using HTML, CSS, and JavaScript. It us
 1. Clone this repository:
 
    ```bash
-   git clone YOUR_REPOSITORY_URL
+   git clone https://mayanknaruka.github.io/Weather-App/
    ```
 
 2. Open the project folder in VS Code.
